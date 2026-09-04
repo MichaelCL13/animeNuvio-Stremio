@@ -1,0 +1,3 @@
+const express=require("express"); const router=express.Router();
+const demo={jkanime:["naruto","one-piece","shingeki-no-kyojin"],animeav1:["naruto","one-piece","shingeki-no-kyojin"]};
+router.get("/catalog/:type/:catalogId.json",(req,res)=>{const {type,catalogId}=req.params;if(type!=="series"||!demo[catalogId])return res.json({metas:[]});let a=demo[catalogId].map(x=>({id:`${catalogId}:${x}`,type:"series",name:x.replace(/-/g," ").replace(/\b\w/g,c=>c.toUpperCase())}));const q=String(req.query.search||"").toLowerCase();if(q)a=a.filter(x=>x.name.toLowerCase().includes(q));res.json({metas:a});}); module.exports=router;
